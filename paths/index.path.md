@@ -6,7 +6,7 @@ A study of methods and models for making a computer display behavior that would 
 
 ## Course Topics and Schedule
 
-You will be building an AI system of 7 modules, each engaging one or more topics from this course. Rather than completing pre-defined assignments, you will propose your own sequence of modules unified by an overarching theme.
+You will be building an AI system of 5-6 modules, each engaging one or more topics from this course. Rather than completing pre-defined assignments, you will propose your own sequence of modules unified by an overarching theme.
 
 Your modules must align with and when topics are covered in class. The goal is to begin work on a module after the relevant content has been taught, although small exceptions may arise.
 
@@ -20,32 +20,26 @@ Your modules must align with and when topics are covered in class. The goal is t
 | 11–12 | Reinforcement Learning (Policy, MDP, Value Functions, Q-Learning), Introduction to Supervised Learning                   |
 | 13–15 | Evaluation Metrics, Class Imbalance, Convolutional Neural Networks, Graph Neural Networks                                |
 
-## Module Due Dates and Checkpoints
+## Project Schedule
 
-| Module               | Due     | Checkpoint |
-| -------------------- | ------- | ---------- |
-| 1                    | Week 3  | ✓ Graded   |
-| 2                    | Week 5  |            |
-| 3                    | Week 6  | ✓ Graded   |
-| 4                    | Week 8  |            |
-| 5                    | Week 10 | ✓ Graded   |
-| 6                    | Week 12 |            |
-| 7                    | Week 14 | ✓ Graded   |
-| Paper + Presentation | Finals  | ✓ Graded   |
+| Project / Milestone       | Due Date           | Graded |
+| ------------------------- | ------------------ | ------ |
+| **Project 0: Setup**      | Thursday, Jan 15   |        |
+| **Project 1: Proposal**   |                    |        |
+| → Draft                   | Tuesday, Jan 20    |        |
+| → Feedback                | Thursday, Jan 22   |        |
+| → Final                   | Monday, Jan 26     | ✓      |
+| **Project 2: AI System**  |                    |        |
+| → Checkpoint 1            | Wednesday, Feb 11  |        |
+| → Checkpoint 2            | Thursday, Feb 26   |        |
+| → Midterm Exam            | Thursday, March 12 | ✓      |
+| → Checkpoint 3            | Thursday, March 19 |        |
+| → Checkpoint 4            | Thursday, April 2  |        |
+| → Checkpoint 5            | Thursday, April 16 |        |
+| → Draft Demo Presentation | Monday, April 20   |        |
+| → Final Demo Presentation | Thursday, April 23 | ✓      |
+| → Final Exam              | Thursday, April 30 | ✓      |
 
-Checkpoints are graded assessments. All modules completed since the previous checkpoint are evaluated together.
-
----
-
-## Project Proposal
-
-### Lecture Materials
-
-- [Propositional Logic Lecture](./lectures/propositional-logic/propositional-logic.lecture.md)
-- [Project Proposal](./proposal.project.md) (due Monday, Week 2; feedback provided by Tuesday, Week 2; final proposal due Thursday, Week 2)
+Checkpoints track your progress on the AI System project. Graded milestones are formally assessed.
 
 ---
-
-# Week 1
-
-- [Lecture](./lectures/propositional-logic/propositional-logic.lecture.md)
