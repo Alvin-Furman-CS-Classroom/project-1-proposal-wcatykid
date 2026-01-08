@@ -36,6 +36,16 @@ python3 .claude/skills/github-classroom/github_classroom.py accepted <assignment
 python3 .claude/skills/github-classroom/github_classroom.py grades <assignment_id>
 ```
 
+### Show Configuration
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py config
+```
+
+Configuration is stored in `.claude/skills/github-classroom/config.json`:
+- `org` - GitHub organization for template repos
+- `classroom_id` - Default classroom ID (used when no ID provided to `assignments`)
+- `classroom_name` - Human-readable classroom name
+
 ### Create Template Repository
 Scaffold a template repository structure from a project file:
 ```bash
@@ -53,6 +63,23 @@ This creates:
 - `unit_tests/` - Unit tests with placeholder test
 - `integration_tests/` - Integration tests directory
 - `.gitignore` - Python-focused gitignore
+
+### Push Template to GitHub
+Push a scaffolded template to the configured GitHub org:
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py push-template <template_dir> <repo_name>
+```
+
+Example:
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py push-template /tmp/proposal-template csc343-proposal
+```
+
+This:
+- Initializes git (if needed)
+- Commits all files
+- Creates the repo in the configured org as a template repository
+- Pushes the code
 
 ### Sync Assignment Metadata
 After creating an assignment in GitHub Classroom UI, sync the assignment metadata back to the project file:
@@ -85,18 +112,24 @@ This updates the project file's YAML frontmatter with:
 
 ### Create Assignment from Project File
 1. Run `create-template` to scaffold a template repo from your project file
-2. Initialize git and push to GitHub as a template repository:
-   ```bash
-   cd <output_dir>
-   git init
-   git add .
-   git commit -m "Initial template"
-   gh repo create <org>/<repo-name> --template --public --source=.
-   git push -u origin main
-   ```
+2. Run `push-template` to push to the configured GitHub org
 3. Go to GitHub Classroom web UI and create a new assignment using the template repo
 4. Run `sync-assignment` with the new assignment ID to update your project frontmatter
 5. The project file now has `assignment_url` for students and `assignment_id` for the feedback harness
+
+Example workflow:
+```bash
+# 1. Scaffold template
+python3 .claude/skills/github-classroom/github_classroom.py create-template paths/proposal.project.md /tmp/proposal-template
+
+# 2. Push to GitHub org
+python3 .claude/skills/github-classroom/github_classroom.py push-template /tmp/proposal-template csc343-proposal
+
+# 3. Create assignment in GitHub Classroom UI...
+
+# 4. Sync assignment metadata back to project file
+python3 .claude/skills/github-classroom/github_classroom.py sync-assignment <assignment_id> paths/proposal.project.md
+```
 
 ## Feedback Harness Commands
 

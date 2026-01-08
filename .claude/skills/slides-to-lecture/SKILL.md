@@ -30,12 +30,12 @@ admin/materials/1 Propositonal Logic/
 
 Before processing, check if this lecture has already been converted:
 
-1. Derive the expected output filename from the source folder name
-2. Check if `paths/lectures/[topic].lecture.md` already exists
+1. Derive the expected output path from the source folder name
+2. Check if `paths/lectures/[topic]/[topic].lecture.md` already exists
 3. If it exists, read the frontmatter to verify it matches the source
 
 **If already converted:**
-- Inform the user: "This lecture has already been converted to `paths/lectures/[topic].lecture.md`"
+- Inform the user: "This lecture has already been converted to `paths/lectures/[topic]/[topic].lecture.md`"
 - Ask if they want to reconvert (overwrite) or skip
 - Only proceed if user explicitly confirms reconversion
 
@@ -49,7 +49,7 @@ Before processing, check if this lecture has already been converted:
 ### Step 1: Check for existing conversion
 
 Before processing slides:
-1. Determine output path: `paths/lectures/[topic].lecture.md`
+1. Determine output path: `paths/lectures/[topic]/[topic].lecture.md`
 2. If file exists, stop and ask user for confirmation before overwriting
 
 ### Step 2: Locate slide images
@@ -75,29 +75,31 @@ Combine all slide analyses into a single markdown file:
 3. **Slide sections** separated by `---` thematic breaks
 4. Each section has a concept-based heading (not "Slide N")
 
-### Step 4: Copy slide images
+### Step 4: Copy assets to lecture folder
 
-Copy all slide images to a local subdirectory:
-1. Create `paths/lectures/[topic]/slides/` directory
-2. Copy all slide images from source folder to this directory
-3. This keeps assets co-located with the lecture file
+Create the lecture folder and copy all assets:
+1. Create `paths/lectures/[topic]/` directory
+2. Create `paths/lectures/[topic]/slides/` subdirectory
+3. Copy the source `.pptx` file to the slides folder
+4. Copy all slide images from source folder to slides folder
+5. This keeps everything co-located and portable
 
-Example:
+Example structure:
 ```
-paths/lectures/
-├── propositional-logic.lecture.md
-└── propositional-logic/
-    └── slides/
-        ├── Slide1.png
-        ├── Slide2.png
-        └── ...
+paths/lectures/propositional-logic/
+├── propositional-logic.lecture.md      # The lecture file
+└── slides/
+    ├── 1 Propositonal Logic.pptx       # Source PowerPoint (copied)
+    ├── Slide1.png
+    ├── Slide2.png
+    └── ...
 ```
 
 ### Step 5: Write output
 
-Save to `paths/lectures/[topic].lecture.md` where topic is derived from the source folder name:
-- "1 Propositonal Logic" → "propositional-logic.lecture.md"
-- "2 Uninformed Search" → "uninformed-search.lecture.md"
+Save the lecture file INSIDE the topic folder:
+- "1 Propositonal Logic" → `paths/lectures/propositional-logic/propositional-logic.lecture.md`
+- "2 Uninformed Search" → `paths/lectures/uninformed-search/uninformed-search.lecture.md`
 
 ## Output Format
 
@@ -105,7 +107,6 @@ Save to `paths/lectures/[topic].lecture.md` where topic is derived from the sour
 ---
 title: "Propositional Logic"
 source: "admin/materials/1 Propositonal Logic"
-download: "../materials/1 Propositonal Logic.pptx"
 converted: "2026-01-08"
 type: lecture
 slides: 64
@@ -151,18 +152,18 @@ Next concept section continues...
 
 [... additional slides ...]
 
-[pptx]: ../../materials/1%20Propositonal%20Logic.pptx
-[1]: ./propositional-logic/slides/Slide1.png
-[2]: ./propositional-logic/slides/Slide2.png
-[3]: ./propositional-logic/slides/Slide3.png
+[pptx]: ./slides/1%20Propositonal%20Logic.pptx
+[1]: ./slides/Slide1.png
+[2]: ./slides/Slide2.png
+[3]: ./slides/Slide3.png
 ```
 
 ### Link Definition Notes
 
-- **PowerPoint link**: `[pptx]` links to original presentation in materials folder
-- **Slide references**: Each section ends with `[N]` linking to the local slide image copy
-- **Clean paths**: Images are co-located in `./[topic]/slides/` for portability
-- **Player integration**: Renderers can use these references to display slide images alongside content
+- **PowerPoint link**: `[pptx]` links to the copied pptx in the local slides folder
+- **Slide references**: Each section ends with `[N]` linking to the slide image
+- **Clean paths**: All assets in `./slides/` relative to the lecture file
+- **Portable**: Entire lecture folder can be moved/shared as a unit
 
 ## Handling Special Slides
 

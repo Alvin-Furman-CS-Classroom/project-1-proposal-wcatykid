@@ -8,14 +8,17 @@ Usage:
 Commands:
     classrooms              List all classrooms
     classroom <id>          Get classroom details
-    assignments <id>        List assignments for a classroom
+    assignments [id]        List assignments for a classroom (uses config if no id)
     assignment <id>         Get assignment details
     accepted <id>           List accepted assignments (student repos)
     grades <id>             Get assignment grades
     create-template <project_file> <output_dir>
                             Scaffold a template repo from a project file
+    push-template <template_dir> <repo_name>
+                            Push template to GitHub org (from config)
     sync-assignment <assignment_id> <project_file>
                             Update project frontmatter with assignment metadata
+    config                  Show current configuration
 """
 
 import json
@@ -25,6 +28,25 @@ import subprocess
 import sys
 from pathlib import Path
 from typing import Any
+
+# Config file location (same directory as this script)
+CONFIG_PATH = Path(__file__).parent / "config.json"
+
+
+def load_config() -> dict:
+    """Load configuration from config.json."""
+    if CONFIG_PATH.exists():
+        return json.loads(CONFIG_PATH.read_text())
+    return {}
+
+
+def show_config() -> None:
+    """Display current configuration."""
+    config = load_config()
+    if config:
+        print(json.dumps(config, indent=2))
+    else:
+        print(json.dumps({"error": "No config.json found", "path": str(CONFIG_PATH)}, indent=2))
 
 
 def gh_api(endpoint: str, paginate: bool = False) -> Any:
@@ -270,6 +292,89 @@ Thumbs.db
     }, indent=2))
 
 
+def push_template(template_dir: str, repo_name: str) -> None:
+    """Push a template directory to GitHub as a template repository."""
+    config = load_config()
+    org = config.get("org")
+
+    if not org:
+        print(json.dumps({"error": "No 'org' configured in config.json"}, indent=2), file=sys.stderr)
+        sys.exit(1)
+
+    template_path = Path(template_dir)
+    if not template_path.exists():
+        print(f"Error: Template directory not found: {template_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    full_repo = f"{org}/{repo_name}"
+
+    # Initialize git if needed
+    git_dir = template_path / ".git"
+    if not git_dir.exists():
+        result = subprocess.run(
+            ["git", "init"],
+            cwd=template_path,
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0:
+            print(f"Error initializing git: {result.stderr}", file=sys.stderr)
+            sys.exit(1)
+
+    # Add all files
+    subprocess.run(["git", "add", "."], cwd=template_path, capture_output=True)
+
+    # Check if there are changes to commit
+    status = subprocess.run(
+        ["git", "status", "--porcelain"],
+        cwd=template_path,
+        capture_output=True,
+        text=True
+    )
+
+    if status.stdout.strip():
+        # Commit changes
+        result = subprocess.run(
+            ["git", "commit", "-m", "Initial template"],
+            cwd=template_path,
+            capture_output=True,
+            text=True
+        )
+        if result.returncode != 0 and "nothing to commit" not in result.stdout:
+            print(f"Error committing: {result.stderr}", file=sys.stderr)
+            sys.exit(1)
+
+    # Create repo and push using gh cli
+    result = subprocess.run(
+        ["gh", "repo", "create", full_repo, "--template", "--public", "--source=.", "--push"],
+        cwd=template_path,
+        capture_output=True,
+        text=True
+    )
+
+    if result.returncode != 0:
+        # Check if repo already exists
+        if "already exists" in result.stderr:
+            print(json.dumps({
+                "status": "error",
+                "error": "Repository already exists",
+                "repo": full_repo,
+                "hint": "Delete the existing repo or use a different name"
+            }, indent=2), file=sys.stderr)
+        else:
+            print(f"Error creating repo: {result.stderr}", file=sys.stderr)
+        sys.exit(1)
+
+    repo_url = f"https://github.com/{full_repo}"
+    print(json.dumps({
+        "status": "success",
+        "repo": full_repo,
+        "url": repo_url,
+        "template": True,
+        "next_step": f"Create assignment in GitHub Classroom using {repo_url} as template"
+    }, indent=2))
+
+
 def sync_assignment(assignment_id: str, project_file: str) -> None:
     """Update project file frontmatter with assignment metadata."""
     project_path = Path(project_file)
@@ -320,15 +425,18 @@ def main() -> None:
 
     command = sys.argv[1]
 
+    # Commands: (function, min_args, max_args) - if max_args is None, uses min_args
     commands = {
-        "classrooms": (list_classrooms, 0),
-        "classroom": (get_classroom, 1),
-        "assignments": (list_assignments, 1),
-        "assignment": (get_assignment, 1),
-        "accepted": (list_accepted, 1),
-        "grades": (get_grades, 1),
-        "create-template": (create_template, 2),
-        "sync-assignment": (sync_assignment, 2),
+        "classrooms": (list_classrooms, 0, 0),
+        "classroom": (get_classroom, 1, 1),
+        "assignments": (list_assignments, 0, 1),  # optional classroom_id, uses config
+        "assignment": (get_assignment, 1, 1),
+        "accepted": (list_accepted, 1, 1),
+        "grades": (get_grades, 1, 1),
+        "create-template": (create_template, 2, 2),
+        "push-template": (push_template, 2, 2),
+        "sync-assignment": (sync_assignment, 2, 2),
+        "config": (show_config, 0, 0),
     }
 
     if command not in commands:
@@ -336,16 +444,28 @@ def main() -> None:
         print(__doc__)
         sys.exit(1)
 
-    func, arg_count = commands[command]
+    func, min_args, max_args = commands[command]
+    provided_args = len(sys.argv) - 2
 
-    if len(sys.argv) - 2 < arg_count:
-        print(f"Error: {command} requires {arg_count} argument(s)")
+    if provided_args < min_args:
+        print(f"Error: {command} requires at least {min_args} argument(s)")
         sys.exit(1)
 
-    if arg_count == 0:
+    if provided_args > max_args:
+        provided_args = max_args
+
+    # Handle optional args with config defaults
+    if command == "assignments" and provided_args == 0:
+        config = load_config()
+        classroom_id = config.get("classroom_id")
+        if not classroom_id:
+            print("Error: No classroom_id argument and none configured in config.json", file=sys.stderr)
+            sys.exit(1)
+        func(str(classroom_id))
+    elif provided_args == 0:
         func()
     else:
-        func(*sys.argv[2:2 + arg_count])
+        func(*sys.argv[2:2 + provided_args])
 
 
 if __name__ == "__main__":

@@ -30,8 +30,7 @@ Your modules must align with and when topics are covered in class. The goal is t
 | 4                    | Week 8  |            |
 | 5                    | Week 10 | ✓ Graded   |
 | 6                    | Week 12 |            |
-| 7                    | Week 15 | ✓ Graded   |
-| 8                    | Finals  |            |
+| 7                    | Week 14 | ✓ Graded   |
 | Paper + Presentation | Finals  | ✓ Graded   |
 
 Checkpoints are graded assessments. All modules completed since the previous checkpoint are evaluated together.
@@ -40,4 +39,13 @@ Checkpoints are graded assessments. All modules completed since the previous che
 
 ## Project Proposal
 
+### Lecture Materials
+
+- [Propositional Logic Lecture](./lectures/propositional-logic/propositional-logic.lecture.md)
 - [Project Proposal](./proposal.project.md) (due Monday, Week 2; feedback provided by Tuesday, Week 2; final proposal due Thursday, Week 2)
+
+---
+
+# Week 1
+
+- [Lecture](./lectures/propositional-logic/propositional-logic.lecture.md)
