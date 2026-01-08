@@ -1,0 +1,167 @@
+# GitHub Classroom Management Skill
+
+This skill helps manage GitHub Classroom tasks for course administration.
+
+## Available Commands
+
+Use the Python script at `.claude/skills/github-classroom/github_classroom.py` to interact with the GitHub Classroom API.
+
+### List Classrooms
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py classrooms
+```
+
+### Get Classroom Details
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py classroom <classroom_id>
+```
+
+### List Assignments for a Classroom
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py assignments <classroom_id>
+```
+
+### Get Assignment Details
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py assignment <assignment_id>
+```
+
+### List Accepted Assignments (Student Repos)
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py accepted <assignment_id>
+```
+
+### Get Assignment Grades
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py grades <assignment_id>
+```
+
+### Create Template Repository
+Scaffold a template repository structure from a project file:
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py create-template <project_file> <output_dir>
+```
+
+Example:
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py create-template paths/proposal.project.md /tmp/proposal-template
+```
+
+This creates:
+- `README.md` - Generated from project title
+- `src/` - Source code directory with `__init__.py`
+- `unit_tests/` - Unit tests with placeholder test
+- `integration_tests/` - Integration tests directory
+- `.gitignore` - Python-focused gitignore
+
+### Sync Assignment Metadata
+After creating an assignment in GitHub Classroom UI, sync the assignment metadata back to the project file:
+```bash
+python3 .claude/skills/github-classroom/github_classroom.py sync-assignment <assignment_id> <project_file>
+```
+
+This updates the project file's YAML frontmatter with:
+- `assignment_id` - The GitHub Classroom assignment ID (for feedback harness)
+- `assignment_url` - The invite link (for students to accept)
+- `assignment_title` - The assignment title from GitHub Classroom
+- `template_repo` - The template repository URL (if set)
+
+## Prerequisites
+
+- GitHub CLI (`gh`) must be installed and authenticated
+- User must have admin access to the GitHub Classroom organization
+
+## Common Workflows
+
+### Review Student Submissions
+1. List classrooms to find the classroom ID
+2. List assignments to find the assignment ID
+3. List accepted assignments to see all student repos
+4. Use `gh repo clone` to clone specific student repos for review
+
+### Check Grades
+1. Get assignment grades to see autograding results
+2. Export grades for gradebook integration
+
+### Create Assignment from Project File
+1. Run `create-template` to scaffold a template repo from your project file
+2. Initialize git and push to GitHub as a template repository:
+   ```bash
+   cd <output_dir>
+   git init
+   git add .
+   git commit -m "Initial template"
+   gh repo create <org>/<repo-name> --template --public --source=.
+   git push -u origin main
+   ```
+3. Go to GitHub Classroom web UI and create a new assignment using the template repo
+4. Run `sync-assignment` with the new assignment ID to update your project frontmatter
+5. The project file now has `assignment_url` for students and `assignment_id` for the feedback harness
+
+## Feedback Harness Commands
+
+Use `feedback_harness.py` to create snapshots of student work and deliver feedback.
+
+### Create Snapshot for All Students
+```bash
+python3 .claude/skills/github-classroom/feedback_harness.py snapshot <assignment_id> --all
+```
+
+### Create Snapshot for Specific Student
+```bash
+python3 .claude/skills/github-classroom/feedback_harness.py snapshot <assignment_id> --student <login>
+```
+
+### List Students for an Assignment
+```bash
+python3 .claude/skills/github-classroom/feedback_harness.py snapshot <assignment_id>
+```
+(Without --all or --student, lists available students)
+
+### List Existing Snapshots
+```bash
+python3 .claude/skills/github-classroom/feedback_harness.py list-snapshots <assignment_id>
+```
+
+### Post Feedback as GitHub Issue
+```bash
+python3 .claude/skills/github-classroom/feedback_harness.py create-issue <assignment_id> <student_login> <feedback_file>
+```
+
+## Feedback Workflow
+
+1. **Create snapshot**: Generate harness file with student's code and commit history
+2. **Review harness**: Evaluate against rubrics (Module Rubric, Code Elegance Rubric)
+3. **Write feedback**: Create feedback markdown file
+4. **Deliver feedback**: Post as GitHub issue to student's repo
+
+### Harness File Location
+
+Harness files are stored at:
+```
+admin/harnesses/assignments/{assignment-slug}/{student-login}/{date}.harness.md
+```
+
+Each student folder also has a `latest.harness.md` symlink to the most recent snapshot.
+
+### Example Evaluation Prompt
+
+When evaluating a harness file with Claude:
+
+```
+Please evaluate this student submission against the Module Rubric
+(admin/materials/module_rubric.md) and Code Elegance Rubric
+(admin/materials/code_elegance_rubric.md).
+
+Provide:
+1. Scores for each rubric criterion with justification
+2. Specific code examples supporting your assessment
+3. Constructive feedback for improvement
+4. Overall summary and grade
+```
+
+## Notes
+
+- All API endpoints require administrator access
+- Pagination is handled automatically (fetches all results)
+- Output is JSON formatted for easy parsing
