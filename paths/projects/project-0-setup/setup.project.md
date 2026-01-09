@@ -50,6 +50,8 @@ You will have the opportunity to use and try many different AI agents in this co
 
 For starters, let's try using Claude Code, Cursor, or GitHub Copilot to help you setup your project. These all have their pros and cons but are solid choices for this course.
 
+<!-- todo: add costs/usage table -->
+
 - [Claude Code](https://code.claude.com/): This is a TUI (Terminal User Interface) based agent that can work along side with you no matter what editor you are using. Claude Code and Opus 4.5 in particular is a very powerful combination.
 - [Cursor](https://cursor.com/): This is a full-blown IDE (VS Code fork) with the AI agent built into the editor itself. Its the most popular choice by current industry standards but is also the most expensive.
 - [GitHub Copilot](https://github.com/features/copilot): This is built right into VSCode and is cheaper than Cursor or Claude Code.
