@@ -10,15 +10,16 @@ You will be building an AI system of 5-6 modules, each engaging one or more topi
 
 Your modules must align with and when topics are covered in class. The goal is to begin work on a module after the relevant content has been taught, although small exceptions may arise.
 
-| Week  | Topics Covered                                                                                                           |
+| Time Spent (weeks)  | Topics Covered                                                                                                           |
 | ----- | ------------------------------------------------------------------------------------------------------------------------ |
-| 1–3   | Propositional Logic (Entailment, Knowledge Bases, Inference Methods, Chaining, CNF, Resolution, Soundness, Completeness) |
-| 4–5   | Uninformed Search (BFS, DFS, Uniform Cost, Iterative Deepening), Informed Search (Heuristics, A*, IDA*, Beam Search)     |
-| 5–6   | First-Order Logic (Quantifiers, Unification, Inference, Chaining)                                                        |
-| 7–8   | Advanced Search (Optimization, Hill Climbing, Simulated Annealing, Genetic Algorithms)                                   |
-| 9–10  | NLP Before LLMs (n-grams, Word Embeddings), Games and Game Theory (Minimax, Alpha-Beta Pruning, MCTS, Nash Equilibrium)  |
-| 11–12 | Reinforcement Learning (Policy, MDP, Value Functions, Q-Learning), Introduction to Supervised Learning                   |
-| 13–15 | Evaluation Metrics, Class Imbalance, Convolutional Neural Networks, Graph Neural Networks                                |
+| 2   | Propositional Logic (Entailment, Knowledge Bases, Inference Methods, Chaining, CNF, Resolution, Soundness, Completeness) |
+| 1.5   | Uninformed Search (BFS, DFS, Uniform Cost, Iterative Deepening), Informed Search (Heuristics, A*, IDA*, Beam Search)     |
+| 1.5   | First-Order Logic (Quantifiers, Unification, Inference, Chaining)                                                        |
+| 1   | Advanced Search (Optimization, Hill Climbing, Simulated Annealing, Genetic Algorithms)                                   |
+| 1.5  | NLP Before LLMs (n-grams, Word Embeddings), Games and Game Theory (Minimax, Alpha-Beta Pruning, MCTS, Nash Equilibrium)  |
+| 1.5   | Games and Game Theory (Sequential Move Games, Minimax, Alpha-Beta Pruning, Heuristics, Monte Carlo Tree Search)
+| 1.5 | Reinforcement Learning (Policy, MDP, Value Functions, Q-Learning), Introduction to Supervised Learning                   |
+| Remaining | Supervised Learning, Linear Regression, Logistic Regression, Evaluation Metrics, SHAP, Neural Network Basics, Convolutional Neural Networks |
 
 ## Project Schedule
 
@@ -40,6 +41,6 @@ Your modules must align with and when topics are covered in class. The goal is t
 | → Final Demo Presentation                                                       | Thursday, April 23 | ✓      |
 | → Final Exam                                                                    | Thursday, April 30 | ✓      |
 
-Checkpoints track your progress on the AI System project. Graded milestones are formally assessed.
+Checkpoints track your progress on the AI System project; they are graded milestones and are formally assessed.
 
 ---
