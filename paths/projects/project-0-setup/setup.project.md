@@ -1,9 +1,9 @@
 ---
 outcomes:
-  - The student will be setup with github Classroom (using this project) and open their repository in an editor of choice.
+  - The student will be set up with GitHub Classroom (using this project) and open their repository in an editor of choice.
   - The student will be able to make changes to their repository and commit them to the remote repository.
   - The student will understand options available for AI agent tools and how to use them.
-  - The student will make a plan for a simple program with the agent
+  - The student will make a plan for a simple program with the agent.
   - The student will build the program with the agent
   - The student will evaluate the agent's performance and provide feedback.
 ---
@@ -46,23 +46,19 @@ Take a look at the starter code in the repository. It's a simple Python project 
 
 ### 4. Pick your AI agent
 
-You will have the opportunity to use and try many different AI agents in this course. This is a very active field and agents are constantly being updated and improved.
+You will use AI coding agents throughout this course. There are many options, but here is a simple path to get started:
 
-For starters, let's try using Claude Code, Cursor, or GitHub Copilot to help you setup your project. These all have their pros and cons but are solid choices for this course.
+**Recommendation:** For the best experience, use [Cursor](https://cursor.com/) or [Claude Code](https://code.claude.com/) with Claude Opus 4.5. This is the most capable setup available right now and costs $20/mo with a Claude Pro subscription.
 
-- [Claude Code](https://code.claude.com/): This is a TUI (Terminal User Interface) based agent that can work along side with you no matter what editor you are using. Claude Code and Opus 4.5 in particular is a very powerful combination.
-- [Cursor](https://cursor.com/): This is a full-blown IDE (VS Code fork) with the AI agent built into the editor itself. Its the most popular choice by current industry standards but is also the most expensive.
-- [GitHub Copilot](https://github.com/features/copilot): This is built right into VSCode and is cheaper than Cursor or Claude Code.
-- [Opencode](https://opencode.ai/): This is another TUI-based agent that can work with any model including some quite powerful free models from time-to-time.
-- [Antigravity (Google)](https://antigravity.google/): Google's VSCode fork with their Gemini 3 model very powerful and mostly free (for now).
+**Free alternatives:** If cost is a concern, [GitHub Copilot](https://github.com/features/copilot) is [free for students](../../resources/github-copilot.guide.md#free-access-for-students) and works well. [Cursor](https://cursor.com/) also has a [free year for students](../../resources/cursor.guide.md#free-year-for-students) if you qualify.
 
-All of these agents are free to start but scale differently based on how much you use them. Typically, you can expect to pay $20/month for a good agent with moderate usage
+See the [Agent Comparison Guide](../../resources/agents-comparison.guide.md) to compare all options.
 
 ---
 
 To try it out, start up your agent of choice and say something like `I want to setup my project`.
 
-Whatch what the agent does. It will search the repository for relevant files likely prompt you for a task to complete.
+Watch what the agent does. It will search the repository for relevant files likely prompt you for a task to complete.
 
 ### 5. Build something with your agent
 
@@ -70,7 +66,7 @@ AI Agents work best when they know what you're trying to do. You can help them u
 
 - Clearly explaining your goal
 - Providing examples or rough notes/ideas
-- Pointing it at relevent files or documentation in your repository
+- Pointing it at relevant files or documentation in your repository
 
 For example, there are multiple tasks in the `/tasks` folder. You can point your agent to these tasks and it should guide you through the process of completing them (or complete them for you if it is an eager model).
 
