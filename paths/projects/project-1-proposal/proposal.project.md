@@ -1,11 +1,6 @@
 ---
+status: draft
 rubric: "./proposal.rubric.md"
-notes:
-  - this is a per-student project (every student will have their own proposal)
-dates:
-  - draft: Tuesday Jan 20th by 2:30pm
-  - feedback: Thursday Jan 22nd by 5:00pm
-  - final: Monday Jan 26th by 2:30pm
 outcomes:
   - The student will propose a coherent system of 7 modules unified by an overarching theme.
   - The student will describe the system and its components.
@@ -14,7 +9,7 @@ outcomes:
   - The student will be concise and well-organized.
 ---
 
-# AI System
+# Project 1: Proposal (draft)
 
 ## Overview
 
@@ -42,9 +37,8 @@ your-repo/
 
 **GitHub requirements:**
 
-- Add the instructor as a repository (co-)owner
 - Use meaningful commit messages
-- Use pull requests for merging features
+- Use [pull requests](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests) for merging features
 - Document issues and their resolution
 - All team members must have visible commit history demonstrating participation
 
@@ -52,9 +46,9 @@ your-repo/
 
 ### Timeline
 
-- **Monday, Week 2:** Initial proposal due
-- **Feedback provided:** Tuesday, Week 2
-- **Thursday, Week 2:** Final proposal due
+- **Draft:** Tuesday Jan 20th by 2:30pm
+- **Feedback:** Thursday Jan 22nd by 5:00pm
+- **Final:** Monday Jan 26th by 2:30pm
 
 ### Proposal Contents
 

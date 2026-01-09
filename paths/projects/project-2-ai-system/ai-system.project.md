@@ -8,3 +8,5 @@ outcomes:
   - The student will present results honestly—do not embellish or overclaim.
   - The student will be concise and well-organized.
 ---
+
+# AI System (draft)
