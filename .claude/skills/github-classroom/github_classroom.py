@@ -16,6 +16,9 @@ Commands:
                             Scaffold a template repo from a project file
     push-template <template_dir> <repo_name>
                             Push template to GitHub org (from config)
+    sync-template <source_dir> <repo_name>
+                            Sync a local directory to a GitHub template repo
+    sync-all-templates      Sync all templates defined in config.json
     sync-assignment <assignment_id> <project_file>
                             Update project frontmatter with assignment metadata
     config                  Show current configuration
@@ -24,8 +27,11 @@ Commands:
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
+from datetime import datetime
 from pathlib import Path
 from typing import Any
 
@@ -375,6 +381,205 @@ def push_template(template_dir: str, repo_name: str) -> None:
     }, indent=2))
 
 
+def repo_exists(repo_full_name: str) -> bool:
+    """Check if a GitHub repository exists."""
+    result = subprocess.run(
+        ["gh", "repo", "view", repo_full_name],
+        capture_output=True, text=True
+    )
+    return result.returncode == 0
+
+
+def sync_template(source_dir: str, repo_name: str) -> None:
+    """Sync a local directory to a GitHub template repository.
+
+    Creates the repo if it doesn't exist, otherwise updates it.
+    Uses rsync-style copy to avoid git subtree complications.
+    """
+    config = load_config()
+    org = config.get("org")
+
+    if not org:
+        print(json.dumps({"error": "No 'org' configured in config.json"}, indent=2), file=sys.stderr)
+        sys.exit(1)
+
+    source_path = Path(source_dir)
+    if not source_path.exists():
+        print(f"Error: Source directory not found: {source_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    if not source_path.is_dir():
+        print(f"Error: Source is not a directory: {source_dir}", file=sys.stderr)
+        sys.exit(1)
+
+    full_repo = f"{org}/{repo_name}"
+    repo_url = f"https://github.com/{full_repo}"
+
+    # Check if repo exists
+    exists = repo_exists(full_repo)
+
+    with tempfile.TemporaryDirectory() as tmp_dir:
+        work_dir = Path(tmp_dir) / repo_name
+
+        if exists:
+            # Clone existing repo
+            print(f"Cloning existing repo: {full_repo}")
+            result = subprocess.run(
+                ["gh", "repo", "clone", full_repo, str(work_dir)],
+                capture_output=True, text=True
+            )
+            if result.returncode != 0:
+                print(f"Error cloning repo: {result.stderr}", file=sys.stderr)
+                sys.exit(1)
+        else:
+            # Create new repo
+            print(f"Creating new repo: {full_repo}")
+            result = subprocess.run(
+                ["gh", "repo", "create", full_repo, "--public", "--clone"],
+                cwd=tmp_dir,
+                capture_output=True, text=True
+            )
+            if result.returncode != 0:
+                print(f"Error creating repo: {result.stderr}", file=sys.stderr)
+                sys.exit(1)
+
+            # Make it a template repo via API
+            print("Configuring as template repository...")
+            api_result = subprocess.run(
+                ["gh", "api", "-X", "PATCH", f"/repos/{full_repo}",
+                 "-f", "is_template=true"],
+                capture_output=True, text=True
+            )
+            if api_result.returncode != 0:
+                print(f"Warning: Could not set as template: {api_result.stderr}", file=sys.stderr)
+
+            # gh repo create --clone creates the dir
+            if not work_dir.exists():
+                work_dir.mkdir()
+                subprocess.run(["git", "init"], cwd=work_dir, capture_output=True)
+                subprocess.run(
+                    ["git", "remote", "add", "origin", f"git@github.com:{full_repo}.git"],
+                    cwd=work_dir, capture_output=True
+                )
+
+        # Sync files: delete everything except .git, then copy source
+        git_dir = work_dir / ".git"
+
+        # Remove all files except .git
+        for item in work_dir.iterdir():
+            if item.name != ".git":
+                if item.is_dir():
+                    shutil.rmtree(item)
+                else:
+                    item.unlink()
+
+        # Copy source files (excluding any .git in source)
+        for item in source_path.iterdir():
+            if item.name == ".git":
+                continue
+            dest = work_dir / item.name
+            if item.is_dir():
+                shutil.copytree(item, dest)
+            else:
+                shutil.copy2(item, dest)
+
+        # Check for changes
+        result = subprocess.run(
+            ["git", "status", "--porcelain"],
+            cwd=work_dir, capture_output=True, text=True
+        )
+
+        if not result.stdout.strip():
+            print(json.dumps({
+                "status": "no_changes",
+                "repo": full_repo,
+                "url": repo_url,
+                "message": "No changes to sync"
+            }, indent=2))
+            return
+
+        # Stage all changes
+        subprocess.run(["git", "add", "-A"], cwd=work_dir, capture_output=True)
+
+        # Commit
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+        commit_msg = f"Sync from main repo at {timestamp}"
+
+        result = subprocess.run(
+            ["git", "commit", "-m", commit_msg],
+            cwd=work_dir, capture_output=True, text=True
+        )
+
+        if result.returncode != 0 and "nothing to commit" not in result.stdout:
+            print(f"Error committing: {result.stderr}", file=sys.stderr)
+            sys.exit(1)
+
+        # Push
+        print(f"Pushing changes to {full_repo}...")
+        result = subprocess.run(
+            ["git", "push", "-u", "origin", "main"],
+            cwd=work_dir, capture_output=True, text=True
+        )
+
+        # Try 'master' if 'main' fails
+        if result.returncode != 0:
+            result = subprocess.run(
+                ["git", "push", "-u", "origin", "master"],
+                cwd=work_dir, capture_output=True, text=True
+            )
+
+        if result.returncode != 0:
+            print(f"Error pushing: {result.stderr}", file=sys.stderr)
+            sys.exit(1)
+
+    # Print success and next steps
+    print(json.dumps({
+        "status": "success",
+        "repo": full_repo,
+        "url": repo_url,
+        "created": not exists,
+        "next_steps": [
+            f"1. Go to GitHub Classroom and create/update assignment",
+            f"2. Use template repo: {repo_url}",
+            f"3. Run sync-assignment to link metadata back to project file"
+        ]
+    }, indent=2))
+
+
+def sync_all_templates() -> None:
+    """Sync all templates defined in config.json."""
+    config = load_config()
+    templates = config.get("templates", {})
+
+    if not templates:
+        print("No templates configured in config.json")
+        print("Add a 'templates' mapping like:")
+        print(json.dumps({
+            "templates": {
+                "paths/projects/project-0-setup/project-0-setup-repository": "csc343-project-0-setup"
+            }
+        }, indent=2))
+        sys.exit(1)
+
+    results = []
+    for source_dir, repo_name in templates.items():
+        print(f"\n{'='*50}")
+        print(f"Syncing: {source_dir} -> {repo_name}")
+        print('='*50)
+
+        try:
+            sync_template(source_dir, repo_name)
+            results.append({"source": source_dir, "repo": repo_name, "status": "success"})
+        except SystemExit:
+            results.append({"source": source_dir, "repo": repo_name, "status": "failed"})
+
+    print(f"\n{'='*50}")
+    print("Summary:")
+    print('='*50)
+    success = sum(1 for r in results if r["status"] == "success")
+    print(f"Synced: {success}/{len(results)} templates")
+
+
 def sync_assignment(assignment_id: str, project_file: str) -> None:
     """Update project file frontmatter with assignment metadata."""
     project_path = Path(project_file)
@@ -435,6 +640,8 @@ def main() -> None:
         "grades": (get_grades, 1, 1),
         "create-template": (create_template, 2, 2),
         "push-template": (push_template, 2, 2),
+        "sync-template": (sync_template, 2, 2),
+        "sync-all-templates": (sync_all_templates, 0, 0),
         "sync-assignment": (sync_assignment, 2, 2),
         "config": (show_config, 0, 0),
     }

@@ -1,5 +1,9 @@
 {
   "org": "Alvin-Furman-CS-Classroom",
   "classroom_id": 293839,
-  "classroom_name": "CSC-343-AI-Spring-2026"
+  "classroom_name": "CSC-343-AI-Spring-2026",
+  "templates": {
+    "paths/projects/project-0-setup/project-0-setup-repository": "csc343-project-0-setup",
+    "paths/projects/project-1-proposal/project-proposal-repository": "csc343-project-1-proposal"
+  }
 }

@@ -1,0 +1,4 @@
+{
+  "subdomain": "csc-343",
+  "roots": ["paths/index.path.md", "paths/csc-343.spec.md"]
+}

@@ -14,9 +14,16 @@ Commands:
 
     create-issue <assignment_id> <student_login> <feedback_file>
         Post feedback as a GitHub issue on student's repo
+
+    evaluate <harness_file> --rubric <rubric_file>
+        Generate draft feedback using Claude API
+
+    batch-evaluate <assignment_id> --rubric <rubric_file>
+        Generate draft feedback for all students
 """
 
 import json
+import os
 import subprocess
 import sys
 import tempfile
@@ -24,6 +31,13 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from typing import Any
+
+# Optional: anthropic SDK for evaluate command
+try:
+    import anthropic
+    ANTHROPIC_AVAILABLE = True
+except ImportError:
+    ANTHROPIC_AVAILABLE = False
 
 # Configuration
 HARNESS_VERSION = "1.0"
@@ -514,6 +528,73 @@ def create_feedback_issue(repo_full_name: str, title: str, body: str) -> str:
     return result.stdout.strip()
 
 
+# --- Claude API Evaluation ---
+
+def evaluate_with_claude(harness_content: str, rubric_content: str) -> str:
+    """Call Claude API to evaluate student work against rubric."""
+    if not ANTHROPIC_AVAILABLE:
+        raise RuntimeError(
+            "anthropic package not installed. Run: pip install anthropic"
+        )
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        raise RuntimeError(
+            "ANTHROPIC_API_KEY environment variable not set"
+        )
+
+    client = anthropic.Anthropic(api_key=api_key)
+
+    prompt = f"""You are evaluating a student submission for an AI course.
+
+## Rubric
+
+{rubric_content}
+
+## Student Submission (Harness File)
+
+{harness_content}
+
+## Instructions
+
+1. Evaluate the submission against each criterion in the rubric.
+2. For each criterion, provide:
+   - Score (0-4 as defined in the rubric)
+   - Brief justification with specific examples from the submission
+3. Be constructive and educational in your feedback.
+4. End with an overall summary and total score.
+
+## Format your response as:
+
+### [Criterion Name]
+**Score: X/4**
+[Justification with specific examples]
+
+...
+
+### Overall Summary
+**Total Score: X/Y**
+[Summary paragraph with key strengths and areas for improvement]
+"""
+
+    message = client.messages.create(
+        model="claude-sonnet-4-20250514",
+        max_tokens=4096,
+        messages=[
+            {"role": "user", "content": prompt}
+        ]
+    )
+
+    return message.content[0].text
+
+
+def save_draft_feedback(harness_path: Path, feedback: str) -> Path:
+    """Save draft feedback alongside the harness file."""
+    draft_path = harness_path.parent / f"draft-feedback-{harness_path.stem.split('.')[0]}.md"
+    draft_path.write_text(feedback, encoding="utf-8")
+    return draft_path
+
+
 # --- Command Handlers ---
 
 def cmd_snapshot(args: list[str]) -> None:
@@ -668,6 +749,144 @@ def cmd_create_issue(args: list[str]) -> None:
         sys.exit(1)
 
 
+def cmd_evaluate(args: list[str]) -> None:
+    """Handle the evaluate command."""
+    if len(args) < 1:
+        print("Usage: feedback_harness.py evaluate <harness_file> --rubric <rubric_file>")
+        sys.exit(1)
+
+    harness_file = args[0]
+    rubric_file = None
+
+    if "--rubric" in args:
+        idx = args.index("--rubric")
+        if idx + 1 < len(args):
+            rubric_file = args[idx + 1]
+
+    if not rubric_file:
+        print("Error: --rubric <rubric_file> is required")
+        sys.exit(1)
+
+    harness_path = Path(harness_file)
+    rubric_path = Path(rubric_file)
+
+    if not harness_path.exists():
+        print(f"Error: Harness file not found: {harness_file}")
+        sys.exit(1)
+
+    if not rubric_path.exists():
+        print(f"Error: Rubric file not found: {rubric_file}")
+        sys.exit(1)
+
+    print(f"Evaluating: {harness_path.name}")
+    print(f"Using rubric: {rubric_path.name}")
+
+    harness_content = harness_path.read_text(encoding="utf-8")
+    rubric_content = rubric_path.read_text(encoding="utf-8")
+
+    try:
+        feedback = evaluate_with_claude(harness_content, rubric_content)
+        draft_path = save_draft_feedback(harness_path, feedback)
+        print(f"\nDraft feedback saved to: {draft_path}")
+        print("\n--- Preview (first 500 chars) ---")
+        print(feedback[:500])
+        if len(feedback) > 500:
+            print("...")
+    except RuntimeError as e:
+        print(f"Error: {e}")
+        sys.exit(1)
+
+
+def cmd_batch_evaluate(args: list[str]) -> None:
+    """Handle the batch-evaluate command."""
+    if len(args) < 1:
+        print("Usage: feedback_harness.py batch-evaluate <assignment_id> --rubric <rubric_file>")
+        sys.exit(1)
+
+    assignment_id = args[0]
+    rubric_file = None
+
+    if "--rubric" in args:
+        idx = args.index("--rubric")
+        if idx + 1 < len(args):
+            rubric_file = args[idx + 1]
+
+    if not rubric_file:
+        print("Error: --rubric <rubric_file> is required")
+        sys.exit(1)
+
+    rubric_path = Path(rubric_file)
+    if not rubric_path.exists():
+        print(f"Error: Rubric file not found: {rubric_file}")
+        sys.exit(1)
+
+    rubric_content = rubric_path.read_text(encoding="utf-8")
+
+    # Get assignment to find slug
+    assignment = get_assignment(assignment_id)
+    assignment_slug = assignment.get("slug", assignment_id) if assignment else assignment_id
+
+    # Find all harness files for this assignment
+    assignment_dir = HARNESS_DIR / "assignments" / assignment_slug
+    if not assignment_dir.exists():
+        print(f"Error: No snapshots found for assignment {assignment_id}")
+        print(f"Expected directory: {assignment_dir}")
+        print("Run 'snapshot --all' first to create harness files.")
+        sys.exit(1)
+
+    # Find latest harness for each student
+    student_dirs = [d for d in assignment_dir.iterdir() if d.is_dir()]
+    if not student_dirs:
+        print(f"No student directories found in {assignment_dir}")
+        sys.exit(1)
+
+    print(f"Found {len(student_dirs)} student(s)")
+    print(f"Using rubric: {rubric_path.name}")
+    print("-" * 40)
+
+    results = []
+    for student_dir in sorted(student_dirs):
+        latest_link = student_dir / "latest.harness.md"
+        if not latest_link.exists():
+            # Try to find most recent harness
+            harness_files = sorted(student_dir.glob("*.harness.md"), reverse=True)
+            if not harness_files:
+                print(f"  {student_dir.name}: No harness file found, skipping")
+                continue
+            harness_path = harness_files[0]
+        else:
+            harness_path = latest_link.resolve()
+
+        print(f"  {student_dir.name}: Evaluating...")
+
+        try:
+            harness_content = harness_path.read_text(encoding="utf-8")
+            feedback = evaluate_with_claude(harness_content, rubric_content)
+            draft_path = save_draft_feedback(harness_path, feedback)
+            results.append({
+                "student": student_dir.name,
+                "status": "success",
+                "draft": str(draft_path)
+            })
+            print(f"    -> Saved: {draft_path.name}")
+        except Exception as e:
+            results.append({
+                "student": student_dir.name,
+                "status": "error",
+                "error": str(e)
+            })
+            print(f"    -> Error: {e}")
+
+    # Summary
+    print("-" * 40)
+    success = sum(1 for r in results if r["status"] == "success")
+    print(f"Completed: {success}/{len(results)} students")
+
+    if success > 0:
+        print(f"\nDraft feedback files are in: {assignment_dir}/*/")
+        print("Review each draft-feedback-*.md file before posting.")
+
+
 # --- Main Entry Point ---
 
 def main() -> None:
@@ -682,6 +901,8 @@ def main() -> None:
         "snapshot": cmd_snapshot,
         "list-snapshots": cmd_list_snapshots,
         "create-issue": cmd_create_issue,
+        "evaluate": cmd_evaluate,
+        "batch-evaluate": cmd_batch_evaluate,
     }
 
     if command not in commands:

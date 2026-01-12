@@ -110,7 +110,42 @@ This updates the project file's YAML frontmatter with:
 1. Get assignment grades to see autograding results
 2. Export grades for gradebook integration
 
-### Create Assignment from Project File
+### Sync Template Repository (Recommended)
+
+For template repos that already exist in the codebase (like `paths/projects/*/project-*-repository/`), use `sync-template` to push them to GitHub:
+
+```bash
+# Sync a single template repo (creates if new, updates if exists)
+python3 .claude/skills/github-classroom/github_classroom.py sync-template \
+    paths/projects/project-0-setup/project-0-setup-repository \
+    csc343-project-0-setup
+
+# Sync all templates defined in config.json
+python3 .claude/skills/github-classroom/github_classroom.py sync-all-templates
+```
+
+**Full workflow:**
+```bash
+# 1. Sync template repo to GitHub
+python3 .claude/skills/github-classroom/github_classroom.py sync-template \
+    paths/projects/project-0-setup/project-0-setup-repository \
+    csc343-project-0-setup
+
+# 2. Go to GitHub Classroom UI and create/update assignment
+#    Use the template repo URL printed by the command
+
+# 3. Sync assignment metadata back to project file
+python3 .claude/skills/github-classroom/github_classroom.py sync-assignment \
+    <assignment_id> \
+    paths/projects/project-0-setup/setup.project.md
+```
+
+**Note:** GitHub Classroom API is read-only, so assignment creation/updates must be done in the web UI.
+
+### Create Assignment from Project File (Alternative)
+
+If you need to scaffold a new template from scratch (rather than syncing an existing directory):
+
 1. Run `create-template` to scaffold a template repo from your project file
 2. Run `push-template` to push to the configured GitHub org
 3. Go to GitHub Classroom web UI and create a new assignment using the template repo
