@@ -64,4 +64,4 @@ As you work through this, think about:
 
 ## When You're Done
 
-Move on to [Task 3: Computing](computing.task).
+Move on to [Task 3: Computing](./computing.task.md).

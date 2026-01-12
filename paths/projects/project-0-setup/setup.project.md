@@ -20,28 +20,44 @@ Follow the instructions below thoughtfully and in order. Take your time and expe
 
 ---
 
-## Part 1: Get Set Up
+## Part 1: Get Your Editor Ready
+
+Before you can open your project, you need an AI-powered code editor. We recommend starting with **Cursor**.
+
+### Install Cursor
+
+1. Download [Cursor](https://cursor.com/) and install it
+2. Open Cursor and sign in (create an account if needed)
+3. [Claim your free year as a student](../../resources/cursor.guide.md#free-year-for-students)
+
+That's it! You're ready to open your project.
+
+> **Pro tip:** You can explore other options like [GitHub Copilot](../../resources/github-copilot.guide.md), [Claude Code](../../resources/claude-code.guide.md), or see the full [Agent Comparison Guide](../../resources/agents-comparison.guide.md) later. For now, Cursor is the easiest way to get started.
+
+---
+
+## Part 2: Get Your Project
 
 ### 1. Accept the assignment
 
 Use the link below to accept the assignment. This will ask you to create a GitHub account (or login with an existing one) and link your Furman email to it. Make sure you select your Furman email from the list it shows you.
 
-#### [Accept the Assignment](https://classroom.github.com/a/bPvk0wQm)
+<a href="https://classroom.github.com/a/bPvk0wQm" className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white no-underline font-semibold rounded-lg shadow-md transition-colors duration-200">Accept the Assignment</a>
 
 If you, for some reason, do not see your Furman email in the list, let the instructor know.
 
-### 2. Clone it locally
+### 2. Open it in Cursor
 
-After you've accepted the assignment, you will see a blue link. This is the URL of your repository. Copy this URL and use it to clone the repository locally.
+After you've accepted the assignment, you will see a blue link. This is the URL of your repository. Copy this URL.
 
-To do this in the terminal (the cool way), run:
+In Cursor, go to **File > New Window > Clone Repository** and paste the URL into the "Repository URL" field. Cursor will clone and open the repository for you.
+
+Or, if you prefer the terminal:
 
 ```bash
 git clone <YOUR_REPO_URL>
 cd project-0-setup-<your-username>
 ```
-
-Or, if you prefer clicking your mouse and are using Cursor or VSCode, go to File > New Window > Clone Repository and paste the URL into the "Repository URL" field. Your IDE should open the repository in a new window.
 
 ### 3. Look around before opening your agent
 
@@ -60,23 +76,6 @@ task3/              # Your computing task work goes here
 
 ---
 
-## Part 2: Choose Your Agent
-
-You'll use AI coding agents throughout this course. Here are your options:
-
-**Recommended:** [Cursor](https://cursor.com/) or [Claude Code](https://code.claude.com/) with Claude Opus 4.5. Most capable setup, $20/mo with Claude Pro.
-
-**Free options:**
-
-- [GitHub Copilot](../../resources/github-copilot.guide.md) — [free for students](../../resources/github-copilot.guide.md#free-access-for-students)
-- [Cursor](../../resources/cursor.guide.md) — [free year for students](../../resources/cursor.guide.md#free-year-for-students)
-
-See the [Agent Comparison Guide](../../resources/agents-comparison.guide.md) for all options.
-
-> **Pro tip:** You can try different agents throughout the semester. Don't stress about picking the "perfect" one now.
-
----
-
 ## Part 3: Your First Conversation
 
 Open your repository in your editor with your agent active.
@@ -90,7 +89,7 @@ Try saying:
 **Watch what happens.** Does your agent:
 
 - Read files first, or start talking immediately?
-- Ask clarifying questions, or assume what you want?o
+- Ask clarifying questions, or assume what you want?
 - If you asked this same question again later in a fresh conversation, would the agent respond exactly the same way?
 
 ### Try a few variations
@@ -120,32 +119,6 @@ These tasks are designed to help you experiment with different ways agents can h
 - [ ] [Task 3: Computing](tasks/computing.task.md)
 
 You can click each task above for detailed instructions. Mark the tasks as complete when you have finished them.
-
-### How to approach them
-
-**As you work, pay attention to:**
-
-- When does the agent help vs. slow you down?
-- What kinds of prompts get better results?
-- Does it feel like collaboration or just automation?
-
-### Don't accept the first answer
-
-If your agent produces code or a plan, don't just say "looks good." Try iterating on the task with the agent.
-
-> "Why did you structure it that way?"
-
-> "What if I wanted to do X instead?"
-
-> "Can you explain this part?"
-
-The best learning happens when you push back a little.
-
-> "Let's try it this way..."
-
-> "I prefer this way of doing it..."
-
-> "That's slop, let's do better..."
 
 ---
 

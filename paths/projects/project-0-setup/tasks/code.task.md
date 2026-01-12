@@ -59,4 +59,4 @@ Once the basic version works, try asking your agent to add a feature:
 
 ## When You're Done
 
-Move on to [Task 2: Planning](planning.task).
+Move on to [Task 2: Planning](./planning.task.md).

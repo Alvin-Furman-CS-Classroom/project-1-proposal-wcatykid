@@ -19,6 +19,7 @@ Choose one of these (or make up your own):
 > I have a bunch of screenshots on my desktop with names like "Screenshot 2024-01-15 at 10.32.45 AM.png". Can you help me come up with a system to rename and organize them? Create a script in task3/ if you want.
 
 Ask your agent to:
+
 - Suggest a naming convention
 - Write a script to rename files (optional)
 - Recommend a folder structure
@@ -28,6 +29,7 @@ Ask your agent to:
 > I need to understand [topic] for a class. Can you give me a quick summary and point me to good resources? Save a summary in task3/notes.md
 
 Pick any topic you're curious about. See how the agent:
+
 - Structures information
 - Handles follow-up questions
 - Suggests resources
@@ -37,6 +39,7 @@ Pick any topic you're curious about. See how the agent:
 > My computer is running slowly / my WiFi keeps dropping / [any tech issue you have]. Can you help me troubleshoot?
 
 Walk through a real (or hypothetical) tech problem. Notice how the agent:
+
 - Asks diagnostic questions
 - Suggests steps to try
 - Explains what it's checking
@@ -69,4 +72,4 @@ Think of any computing-related task you'd normally do manually or Google for hel
 
 Complete the `REFLECTION.md` file in the root of your repository, then commit and push your work.
 
-Return to the [main project instructions](setup.project) for submission details.
+Return to the [main project instructions](../setup.project.md) for submission details.
