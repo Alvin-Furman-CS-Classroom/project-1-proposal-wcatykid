@@ -14,17 +14,9 @@ assignment_title: "Project 0: Setup"
 
 # Project 0: Setup
 
-## What This Project Is About
+This project will help you get set up with the tools you will use in this course as well as introduce you to agent-based development.
 
-This isn't just about installing tools. It's about developing intuition for how AI agents work—what they're good at, where they struggle, and how to communicate with them effectively.
-
-By the end of this project, you should be able to answer:
-
-- How does my agent "see" my project?
-- What happens when I give vague vs. specific instructions?
-- When is an agent helpful vs. when does it get in the way?
-
-Take your time. Experiment. The goal is understanding, not speed.
+Follow the instructions below thoughtfully and in order. Take your time and experiment. The goal is to understand how to use AI agents effectively for our project work that comes after.
 
 ---
 
@@ -32,9 +24,11 @@ Take your time. Experiment. The goal is understanding, not speed.
 
 ### 1. Accept the assignment
 
-Use the link below to accept the assignment (this will ask you to create a GitHub account if you don't have one and link your Furman email to it).
+Use the link below to accept the assignment. This will ask you to create a GitHub account (or login with an existing one) and link your Furman email to it. Make sure you select your Furman email from the list it shows you.
 
 #### [Accept the Assignment](https://classroom.github.com/a/bPvk0wQm)
+
+If you, for some reason, do not see your Furman email in the list, let the instructor know.
 
 ### 2. Clone it locally
 
