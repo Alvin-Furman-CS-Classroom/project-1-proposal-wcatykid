@@ -1,4 +1,4 @@
-## Course Topics and Schedule
+## Course Topics
 
 You will be building an AI system of 5-6 modules, each engaging one or more topics from this course. Rather than completing pre-defined assignments, you will propose your own sequence of modules unified by an overarching theme.
 

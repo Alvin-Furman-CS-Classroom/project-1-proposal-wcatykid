@@ -37,7 +37,8 @@ Students must propose an AI System comprising **5-6 modules**, each engaging one
 
 - Check this url for the course schedule and module topics: [Course Topics and Schedule](https://csc-343.path.app/projects/project-1-proposal/proposal.project)
 
-- Check this URL for the topic order and schedule: [Course Topics and Schedule](https://csc-343.path.app/resources/343-topics-and-schedule.guide)
+- Check this URL for the topic order: [Course Topics and Schedule](https://csc-343.path.app/resources/course.topics.md)
+- Check this URL for the course schedule: [Course Schedule](https://csc-343.path.app/resources/course.schedule.md)
 
 ## Guiding the Student
 
