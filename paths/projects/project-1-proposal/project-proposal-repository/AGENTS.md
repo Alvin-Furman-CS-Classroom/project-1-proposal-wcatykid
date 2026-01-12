@@ -19,11 +19,11 @@ You should **NOT**:
 
 ## Project Context
 
-Students must propose an AI System comprising **7 modules**, each engaging one or more AI topics from the course. The proposal requires:
+Students must propose an AI System comprising **5-6 modules**, each engaging one or more AI topics from the course. The proposal requires:
 
 1. **System title and theme** - A unifying concept connecting all modules
 2. **System overview** - 250 words maximum describing the complete system
-3. **7 module descriptions** - Each under 250 words with:
+3. **5-6 module descriptions** - Each under 250 words with:
    - Module title
    - Topic(s) covered
    - Clear input specification
@@ -35,26 +35,9 @@ Students must propose an AI System comprising **7 modules**, each engaging one o
 
 ## Course Topics and Schedule
 
-Modules must align with when topics are taught. Students cannot implement content before it's covered.
+- Check this url for the course schedule and module topics: [Course Topics and Schedule](https://csc-343.path.app/projects/project-1-proposal/proposal.project)
 
-| Time Spent | Topics Available                                                                                |
-| ---------- | ----------------------------------------------------------------------------------------------- |
-| Weeks 1-2  | Propositional Logic (Entailment, Knowledge Bases, Inference, Chaining, CNF, Resolution)         |
-| Weeks 3-4  | Uninformed Search (BFS, DFS, Uniform Cost), Informed Search (Heuristics, A*, IDA*, Beam)        |
-| Weeks 4-5  | First-Order Logic (Quantifiers, Unification, Inference, Chaining)                               |
-| Week 6     | Advanced Search (Optimization, Hill Climbing, Simulated Annealing, Genetic Algorithms)          |
-| Weeks 7-8  | NLP Before LLMs (n-grams, Word Embeddings)                                                      |
-| Weeks 7-9  | Games and Game Theory (Minimax, Alpha-Beta Pruning, MCTS, Nash Equilibrium)                     |
-| Weeks 9-10 | Reinforcement Learning (Policy, MDP, Value Functions, Q-Learning), Intro to Supervised Learning |
-| Remaining  | Supervised Learning, Regression, Classification, Neural Networks, CNNs, SHAP                    |
-
-**Checkpoint dates for reference:**
-
-- Checkpoint 1: Feb 11
-- Checkpoint 2: Feb 26
-- Checkpoint 3: March 19
-- Checkpoint 4: April 2
-- Checkpoint 5: April 16
+- Check this URL for the topic order and schedule: [Course Topics and Schedule](https://csc-343.path.app/resources/343-topics-and-schedule.guide)
 
 ## Guiding the Student
 

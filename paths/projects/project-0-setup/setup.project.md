@@ -44,6 +44,8 @@ Use the link below to accept the assignment. This will ask you to create a GitHu
 
 <a href="https://classroom.github.com/a/bPvk0wQm" className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white no-underline font-semibold rounded-lg shadow-md transition-colors duration-200">Accept the Assignment</a>
 
+<!-- TODO: add screenshot of blue link -->
+
 If you, for some reason, do not see your Furman email in the list, let the instructor know.
 
 ### 2. Open it in Cursor
@@ -52,11 +54,15 @@ After you've accepted the assignment, you will see a blue link. This is the URL 
 
 In Cursor, go to **File > New Window > Clone Repository** and paste the URL into the "Repository URL" field. Cursor will clone and open the repository for you.
 
+![Clone Repository](./assets/cursor-open-repo.png)
+
 Or, if you prefer the terminal:
 
 ```bash
+cd ~/projects/
 git clone <YOUR_REPO_URL>
 cd project-0-setup-<your-username>
+cursor .
 ```
 
 ### 3. Look around before opening your agent
@@ -187,3 +193,13 @@ Your repository should include:
 
 1. **Ask your agent first**: This is good practice, and often works well if you are clear about your question.
 2. **Reach out to the instructor**: If you're truly stuck.
+
+---
+
+## Start Project 1: Proposal
+
+Now that you're comfortable interacting with agents in cursor, you can move on to your project proposal.
+
+<!-- make this a button like the classroom link -->
+
+<a href="../project-1-proposal/proposal.project" className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white no-underline font-semibold rounded-lg shadow-md transition-colors duration-200">Project 1: Proposal →</a>

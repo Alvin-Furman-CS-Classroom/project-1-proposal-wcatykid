@@ -1,6 +1,22 @@
 # CSC-343 Course Workflows
 
-This document explains how the course infrastructure fits together and provides step-by-step workflows for common tasks.
+## Project 1: Proposal Workflow
+
+- Add automated rubric review (student/group) before instructor review
+- This would be the [elegent code rubric](../../paths/rubrics/code-elegance.rubric.md) and the project 1 rubric ([proposal.rubric.md](../../paths/projects/project-1-proposal/proposal.rubric.md))
+
+## Goal:
+
+Produce a report ("clean bill of health") and create a checkpoint review file e.g. `checkpoint-1-report.review.md` and pushed to repo under `feedback/`, feedback -> fix -> feedback -> fix -> ... -> push to repo
+
+## Report format:
+
+- A summary of the report at the top
+- A rubric style table with checkboxes for each criterion and a numeric score out of 4 (using the rubrics from the project)
+- Suggestions for this checkpoint
+- Bridge for how to transition to the next checkpoint
+
+  This document explains how the course infrastructure fits together and provides step-by-step workflows for common tasks.
 
 ## Architecture Overview
 
@@ -35,12 +51,12 @@ This document explains how the course infrastructure fits together and provides 
 
 ### Components
 
-| Component | Purpose | Location |
-|-----------|---------|----------|
-| **PathMX** | Student-facing content (assignments, guides) | `paths/` |
-| **GitHub Classroom** | Assignment distribution, student repos | [Classroom Admin](https://classroom.github.com/classrooms/241321390-alvin-furman-cs-classroom-csc-343-ai-spring-2026) |
-| **Claude Skills** | Automation scripts for classroom management | `.claude/skills/github-classroom/` |
-| **Feedback Harness** | Snapshot student work, generate/deliver feedback | `admin/harnesses/` |
+| Component            | Purpose                                          | Location                                                                                                              |
+| -------------------- | ------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------- |
+| **PathMX**           | Student-facing content (assignments, guides)     | `paths/`                                                                                                              |
+| **GitHub Classroom** | Assignment distribution, student repos           | [Classroom Admin](https://classroom.github.com/classrooms/241321390-alvin-furman-cs-classroom-csc-343-ai-spring-2026) |
+| **Claude Skills**    | Automation scripts for classroom management      | `.claude/skills/github-classroom/`                                                                                    |
+| **Feedback Harness** | Snapshot student work, generate/deliver feedback | `admin/harnesses/`                                                                                                    |
 
 ---
 
@@ -57,6 +73,7 @@ python3 .claude/skills/github-classroom/github_classroom.py sync-template \
 ```
 
 This will:
+
 - Create the repo if it doesn't exist (as a template repo)
 - Update it if it already exists
 - Print the template URL for use in GitHub Classroom
@@ -74,6 +91,7 @@ python3 .claude/skills/github-classroom/github_classroom.py sync-all-templates
 ## Workflow 2: Creating a New Assignment
 
 ### Prerequisites
+
 - GitHub CLI (`gh`) installed and authenticated
 - Admin access to the classroom organization
 
@@ -82,6 +100,7 @@ python3 .claude/skills/github-classroom/github_classroom.py sync-all-templates
 #### 1. Author the project in PathMX
 
 Create or update the project file:
+
 ```
 paths/projects/project-N-name/
 ├── name.project.md      # Assignment spec (student-facing)
@@ -139,6 +158,7 @@ python3 .claude/skills/github-classroom/feedback_harness.py snapshot <assignment
 ```
 
 This clones each student repo and creates a harness file at:
+
 ```
 admin/harnesses/assignments/<assignment-slug>/<student-login>/<date>.harness.md
 ```
@@ -152,6 +172,7 @@ python3 .claude/skills/github-classroom/feedback_harness.py list-snapshots <assi
 #### 3. Review harness files
 
 Each harness file contains:
+
 - Student info and repo metadata
 - Commit history with contribution breakdown
 - README content
@@ -161,11 +182,13 @@ Each harness file contains:
 #### 4. Evaluate against rubrics
 
 Reference:
+
 - `paths/projects/project-1-proposal/proposal.rubric.md` - Proposal rubric
 - `admin/materials/module_rubric.md` - Module rubric
 - `admin/materials/code_elegance_rubric.md` - Code quality rubric
 
 You can use Claude to assist with evaluation:
+
 ```
 Please evaluate this student submission against the Proposal Rubric.
 Score each criterion 0-4 with justification.
@@ -175,6 +198,7 @@ Be constructive and specific.
 #### 5. Write feedback markdown
 
 Create a feedback file with:
+
 - Scores per rubric criterion
 - Specific examples from student code
 - Constructive suggestions for improvement
@@ -267,19 +291,23 @@ Config file: `.claude/skills/github-classroom/config.json`
 ## Troubleshooting
 
 ### "Error: Could not fetch assignment"
+
 - Verify assignment ID (check URL in GitHub Classroom)
 - Ensure `gh` is authenticated: `gh auth status`
 
 ### "No accepted assignments found"
+
 - Students haven't accepted yet
 - Check assignment invite link is correct
 
 ### "Failed to clone repo"
+
 - Student repo may be empty
 - Check network connectivity
 - Verify you have org admin access
 
 ### Harness file is missing content
+
 - Student hasn't committed any code yet
 - Check their commit history in GitHub
 
