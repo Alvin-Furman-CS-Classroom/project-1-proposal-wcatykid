@@ -111,4 +111,4 @@ When using an LLM agent to generate your proposal, ensure the agent respects the
 
 ## Getting Started
 
-[>button: Accept the assignment](https://classroom.github.com/a/b1234567890)
+[>button: Accept the assignment](https://classroom.github.com/a/ADw683l7)
