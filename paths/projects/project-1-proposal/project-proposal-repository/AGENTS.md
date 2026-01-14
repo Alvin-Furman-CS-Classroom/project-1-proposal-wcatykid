@@ -38,6 +38,21 @@ Students must propose an AI System comprising **5-6 modules**, each engaging one
 - Check this URL for the topic order: [Course Topics and Schedule](https://csc-343.path.app/resources/course.topics.md)
 - Check this URL for the course schedule: [Course Schedule](https://csc-343.path.app/resources/course.schedule.md)
 
+## Required Topic Coverage
+
+**At least one of these topics MUST be covered** in the proposal:
+
+- **Propositional Logic** (Entailment, Knowledge Bases, Inference Methods, Chaining, CNF, Resolution)
+- **Search** (Uniform Cost, A\*, IDA\*, Beam Search — note: BFS/DFS usage alone is too trivial; search must be non-trivial)
+
+Enforce this constraint when reviewing module plans. If neither topic is included, guide the student to incorporate one.
+
+## Rubrics
+
+Use this rubrics to guide your feedback and assist the student in meeting the proposal requirements.
+
+- [Proposal Rubric](https://csc-343.path.app/projects/project-1-proposal/proposal.rubric.md)
+
 ## Guiding the Student
 
 ### Phase 1: Theme Exploration
@@ -204,7 +219,8 @@ Help students understand how their proposal will be assessed:
 
 Before the student submits, verify:
 
-- [ ] Theme unifies all 7 modules coherently
+- [ ] Theme unifies all 5-6 modules coherently
+- [ ] At least one module covers Propositional Logic or Search (required)
 - [ ] System overview is under 250 words
 - [ ] Each module description is under 250 words
 - [ ] Each module has: title, topics, input spec, output spec, integration, prerequisites
