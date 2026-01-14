@@ -3,8 +3,9 @@
 One of these two _MUST_ be covered in the proposal.
 
 - Make sure that "logic and reasoning" from the first set of topics (not first-order logic) is covered in the proposal.
-- Next is "searching" (BFS, DFS, Uniform Cost, Iterative Deepening, Heuristics, A*, IDA*, Beam Search)
-- Only some proposals get picked based on the groups and interests
+- Next is "searching" (Uniform Cost, Iterative Deepening, Heuristics, A*, IDA*, Beam Search, use of BFS or DFS must be non-trivial)
+
+Only some proposals get picked based on the groups and interests.
 
 ## AGENTS.md
 
