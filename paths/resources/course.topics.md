@@ -6,7 +6,7 @@ Your modules must align with and when topics are covered in class. The goal is t
 
 | Time Spent (weeks) | Topics Covered                                                                                                                              |
 | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| 2                  | Propositional Logic (Entailment, Knowledge Bases, Inference Methods, Chaining, CNF, Resolution, Soundness, Completeness)                    |
+| 1.5                | Propositional Logic (Entailment, Knowledge Bases, Inference Methods, Chaining, CNF, Resolution, Soundness, Completeness)                    |
 | 1.5                | Uninformed Search (BFS, DFS, Uniform Cost, Iterative Deepening), Informed Search (Heuristics, A*, IDA*, Beam Search)                        |
 | 1.5                | First-Order Logic (Quantifiers, Unification, Inference, Chaining)                                                                           |
 | 1                  | Advanced Search (Optimization, Hill Climbing, Simulated Annealing, Genetic Algorithms)                                                      |
