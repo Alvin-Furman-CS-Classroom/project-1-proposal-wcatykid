@@ -17,6 +17,10 @@ You will design and build an AI System: a coherent software project comprising 7
 
 An LLM agent will assist you in generating your proposal. This document provides the context the agent needs to produce a feasible, well-scoped proposal that aligns with course content and assessment criteria.
 
+Use the link below to accept the assignment. Make sure you select your Furman email from the list it shows you.
+
+<a href="https://classroom.github.com/a/ADw683l7" className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white no-underline font-semibold rounded-lg shadow-md transition-colors duration-200">Accept the Assignment</a>
+
 ## Project Structure
 
 **Team composition:** Pairs required; groups of 3 acceptable.
