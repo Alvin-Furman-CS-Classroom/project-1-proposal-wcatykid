@@ -19,7 +19,9 @@ An LLM agent will assist you in generating your proposal. This document provides
 
 Use the link below to accept the assignment. Make sure you select your Furman email from the list it shows you.
 
-<a href="https://classroom.github.com/a/ADw683l7" className="inline-block px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white no-underline font-semibold rounded-lg shadow-md transition-colors duration-200">Accept the Assignment</a>
+[>button: Accept the assignment](https://classroom.github.com/a/ADw683l7)
+
+_Note: if you get an "access denied" error. Check [here](https://github.com/settings/organizations) or your email for an invitation._
 
 ## Project Structure
 
@@ -116,3 +118,5 @@ When using an LLM agent to generate your proposal, ensure the agent respects the
 ## Getting Started
 
 [>button: Accept the assignment](https://classroom.github.com/a/ADw683l7)
+
+_Note: if you get an "access denied" error. Check [here](https://github.com/settings/organizations) or your email for an invitation._
