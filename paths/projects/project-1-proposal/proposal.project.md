@@ -54,7 +54,7 @@ your-repo/
 
 Proposals should be created in markdown (.md) format. Your proposal must include:
 
-1. **System title and theme:** A unifying concept that connects all 7 modules into a coherent system.
+1. **System title and theme:** A unifying concept that connects all 5-6 modules into a coherent system.
 
 2. **System overview:** A concise description (250 words maximum) of what the complete system will do and why the chosen theme is appropriate for exploring AI concepts.
 
@@ -69,7 +69,7 @@ Proposals should be created in markdown (.md) format. Your proposal must include
 
 4. **Feasibility study:** A timeline showing that each module's prerequisites align with the course schedule. The agent will verify that you are not planning to implement content before it is taught.
 
-5. **Coverage rationale:** Brief justification for your choice of 7 topics from the 13 available.
+5. **Coverage rationale:** Brief justification for your choice of 5-6 topics from the 13 available.
 
 ### Proposal Quality Expectations
 
