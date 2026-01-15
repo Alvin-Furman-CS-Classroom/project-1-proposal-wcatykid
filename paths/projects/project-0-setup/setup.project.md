@@ -54,8 +54,6 @@ After you've accepted the assignment, you will see a blue link. This is the URL 
 
 In Cursor, go to **File > New Window > Clone Repository** and paste the URL into the "Repository URL" field. Cursor will clone and open the repository for you.
 
-![Clone Repository](./assets/cursor-open-repo.png)
-
 Or, if you prefer the terminal:
 
 ```bash

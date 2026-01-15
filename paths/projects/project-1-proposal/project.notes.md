@@ -10,7 +10,7 @@ Only some proposals get picked based on the groups and interests.
 ## AGENTS.md
 
 - Instructions for proposal guidance
-- Reinforce the ordering constraints of topics and coverage (see [Course Topics and Schedule](../../resources/343-topics-and-schedule.guide.md))
+- Reinforce the ordering constraints of topics and coverage. See [Course Topics](../../resources/course.topics.md) and [Course Schedule](../../resources/course.schedule.md)
 
 ## Agent Skill
 

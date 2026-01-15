@@ -22,7 +22,7 @@ LLM assistance is permitted and expected for proposal generation. Therefore, sta
 
 ### 1. Coherence of Theme
 
-Does the overarching theme unify the 7 modules into a coherent system?
+Does the overarching theme unify the modules into a coherent system?
 
 | Score | Description                                                                                                                                    |
 | ----- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -110,7 +110,7 @@ Are individual module descriptions complete and well-crafted?
 
 | Score | Description                                                                                                                                                   |
 | ----- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 4     | All 8 module descriptions are excellent. Each includes title, topics, I/O, integration context, and prerequisites. Descriptions are specific and informative. |
+| 4     | All module descriptions are excellent. Each includes title, topics, I/O, integration context, and prerequisites. Descriptions are specific and informative. |
 | 3     | Module descriptions are good. All required elements present with minor weaknesses.                                                                            |
 | 2     | Module descriptions are uneven. Some are complete; others lack required elements or are vague.                                                                |
 | 1     | Module descriptions are poor. Most lack required elements or are too vague to evaluate.                                                                       |
