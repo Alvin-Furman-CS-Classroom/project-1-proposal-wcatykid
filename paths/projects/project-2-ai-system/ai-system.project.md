@@ -18,7 +18,7 @@ You will implement the 5-6 module AI system you proposed in Project 1. Each modu
 
 ## Project Structure
 
-**Team composition:** Pairs required; groups of 3 acceptable.
+**Team composition:** Assigned groups of 2-3 by Dr. Alvin
 
 **Development tools:** You may use Cursor, GitHub Copilot, Claude Code, or other LLM-assisted tools. Cursor is recommended.
 
@@ -26,6 +26,10 @@ You will implement the 5-6 module AI system you proposed in Project 1. Each modu
 
 ```
 your-repo/
+├── ./src/                              # main system source code 
+├── ./unit_tests/                       # unit tests that parallel the structure of the .src/ directory sttructure
+├── ./integration_tests/                # Integration tests; this should be easily navigable based on directory and file names
+|                                       # Use a new folder for each new module 
 ├── .claude/skills/code-review/SKILL.md # rubric-based agent review
 ├── AGENTS.md                           # instructions for your LLM agent
 └── README.md                           # system overview and checkpoints
@@ -40,8 +44,10 @@ You are expected to use an AI agent to support planning and review, not to repla
 1. Write a short module spec in `README.md` (inputs, outputs, dependencies, tests).
 2. Ask the agent to propose a plan in "Plan" mode.
 3. Review and edit the plan. You must understand and approve the approach.
-4. Implement and test the module.
-5. Run a rubric review using the code-review skill.
+4. Implement the module in a .src/ folder.
+5. Unit test the module placing unit tests in a .unit_tests/ directory that will be a parallel structure to the main .src/ folder.
+6. With each module beyond the first, perform integration tests linking all implemented modules. Use a new subfolder for each module.
+7. Run a rubric review using the code-review skill.
 
 ## Checkpoints and Deliverables
 
@@ -52,6 +58,7 @@ At each checkpoint, your team must provide:
 - Updated module spec and integration notes in `README.md`
 - Working implementation for the module(s)
 - Tests that validate core behavior and edge cases
+- Integration tests that demonstrate proper interactivity among modules
 - Evidence of usage (logs, screenshots, sample outputs)
 - Short reflection on what changed since the previous checkpoint
 
