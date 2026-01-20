@@ -64,15 +64,25 @@ At each checkpoint, your team must provide:
 
 ## Quality Expectations
 
-Your work will be graded with the [AI System Rubric](./ai-system.rubric.md). Each module must demonstrate:
+Your work will be graded with the [AI System Rubric](./ai-system.rubric.md).
 
+**Participation Requirement:** All team members must demonstrate meaningful, substantive contribution. Students who do not participate—or who monopolize work and relegate teammates to menial tasks—will receive a 0 for the checkpoint.
+
+Each module is assessed in two parts:
+
+**Part 1: Source Code (src/)**
 1. **Functionality:** The module works as specified.
 2. **Code elegance:** Clean, readable, well-structured code.
-3. **Testing:** Unit/integration tests that pass and cover meaningful behavior.
+3. **Documentation:** Clear docstrings with type hints.
 4. **I/O clarity:** Inputs/outputs are clearly defined and easy to assess.
 5. **Topic engagement:** The module meaningfully engages its AI topic.
-6. **Documentation:** Clear README updates and docstrings.
-7. **GitHub practices:** Meaningful commits, PRs, and issue tracking.
+
+**Part 2: Testing (unit_tests/ and integration_tests/)**
+1. **Coverage & design:** Tests cover core functionality, edge cases, and error conditions.
+2. **Quality & correctness:** Tests are meaningful, pass, and verify behavior (not implementation).
+3. **Organization:** Tests are logically grouped with clear, descriptive names.
+
+**GitHub Practices:** Meaningful commit messages, appropriate use of branches/PRs, and evidence of code review.
 
 ## Set Up Your Agent
 
