@@ -6,7 +6,7 @@ outcomes:
   - The student will pass each checkpoint using agent-guided reviews and instructor feedback.
 ---
 
-[@github_classroom_link]: https://classroom.github.com/a/ADw683l7]
+[@github_classroom_link]: https://classroom.github.com/a/ADw683l7
 
 # Project 2: AI System
 
@@ -26,10 +26,10 @@ You will implement the 5-6 module AI system you proposed in Project 1. Each modu
 
 ```
 your-repo/
-├── ./src/                              # main system source code 
+├── ./src/                              # main system source code
 ├── ./unit_tests/                       # unit tests that parallel the structure of the .src/ directory sttructure
 ├── ./integration_tests/                # Integration tests; this should be easily navigable based on directory and file names
-|                                       # Use a new folder for each new module 
+|                                       # Use a new folder for each new module
 ├── .claude/skills/code-review/SKILL.md # rubric-based agent review
 ├── AGENTS.md                           # instructions for your LLM agent
 └── README.md                           # system overview and checkpoints
@@ -71,6 +71,7 @@ Your work will be graded with the [AI System Rubric](./ai-system.rubric.md).
 Each module is assessed in two parts:
 
 **Part 1: Source Code (src/)**
+
 1. **Functionality:** The module works as specified.
 2. **Code elegance:** Clean, readable, well-structured code.
 3. **Documentation:** Clear docstrings with type hints.
@@ -78,6 +79,7 @@ Each module is assessed in two parts:
 5. **Topic engagement:** The module meaningfully engages its AI topic.
 
 **Part 2: Testing (unit_tests/ and integration_tests/)**
+
 1. **Coverage & design:** Tests cover core functionality, edge cases, and error conditions.
 2. **Quality & correctness:** Tests are meaningful, pass, and verify behavior (not implementation).
 3. **Organization:** Tests are logically grouped with clear, descriptive names.
